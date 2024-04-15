@@ -1,18 +1,4 @@
 
-.onLoad <- function(libname, pkgname) {
-    
-    patharch <- hdf5_plugin_path()
-    existing_path <- Sys.getenv("HDF5_PLUGIN_PATH")
-    
-    ## retain any existing plugin locations
-    if(nzchar(existing_path)) {
-      sep = if(.Platform$OS.type == "windows") ";" else ":"
-      patharch <- paste(patharch, existing_path, sep = sep)
-    }
-    
-    Sys.setenv(HDF5_PLUGIN_PATH=patharch)
-}
-
 #' Return location of installed filters
 #' 
 #' This function can be used to find the location of the installed filters.

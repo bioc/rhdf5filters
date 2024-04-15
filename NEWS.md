@@ -1,5 +1,10 @@
 # rhdf5filters 1.16.0
 
+## CHANGES
+
+* rhdf5filters no longer sets the `HDF5_PLUGIN_PATH` environment variable when
+it is loaded.  Instead this is handled by the `H5PLprepend()` function in rhdf5.
+
 ## BUG FIXES
 
 * Fixed issue compiling VBZ filter when R was installed via conda. Backported
