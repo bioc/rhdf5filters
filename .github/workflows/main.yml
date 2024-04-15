@@ -68,6 +68,7 @@ jobs:
             covr
             rcmdcheck
         continue-on-error: true
+        post-if: 'always()'
             
       - name: Bioc - Build, Install, Check
         uses: grimbough/bioc-actions/build-install-check@v1
