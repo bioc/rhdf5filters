@@ -24,12 +24,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-2022, bioc-version: 'devel', Ncpus: 4, bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor', sys-libs: 'false'}
-        - { os: ubuntu-22.04, bioc-version: 'devel', Ncpus: 4, bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor', sys-libs: 'false'}
-        - { os: ubuntu-22.04, bioc-version: 'devel', Ncpus: 4, bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor', sys-libs: 'true'}
-        - { os: ubuntu-22.04, bioc-version: 'release',  Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor', sys-libs: 'true'}
-        - { os: macOS-13,     bioc-version: 'devel', Ncpus: 4, bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor', sys-libs: 'false'}
-        - { os: macOS-14,     bioc-version: 'devel', Ncpus: 3, bioc-mirror: 'https://ftp.gwdg.de/pub/misc/bioconductor', sys-libs: 'false'}
+        - { os: windows-2022, bioc-version: 'devel',    Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'false'}
+        - { os: ubuntu-24.04, bioc-version: 'devel',    Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'false'}
+        - { os: ubuntu-24.04, bioc-version: 'devel',    Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'true'}
+        - { os: ubuntu-24.04, bioc-version: 'release',  Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'true'}
+        - { os: macOS-13,     bioc-version: 'devel',    Ncpus: 4, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'false'}
+        - { os: macOS-14,     bioc-version: 'devel',    Ncpus: 3, bioc-mirror: 'https://packagemanager.posit.co/bioconductor/latest', sys-libs: 'false'}
     steps:
     
       ## R CMD check complains about Windows line endings without this
@@ -70,13 +70,18 @@ jobs:
         continue-on-error: true
             
       - name: Bioc - Build, Install, Check
+        id: build-install-check
         uses: grimbough/bioc-actions/build-install-check@v1
 
       - name: Run BiocCheck
         uses: grimbough/bioc-actions/run-BiocCheck@v1
         with:
           error-on: 'never'
-          arguments: '--no-check-bioc-help' 
+          arguments: '--no-check-bioc-help'
+          
+      - name: Test INSTALL with C23
+        run: |
+          R CMD INSTALL --use-C23 ${{ steps.build-install-check.outputs.source-tarball }}
 
       - name: Test coverage
         if: runner.os == 'Windows'
