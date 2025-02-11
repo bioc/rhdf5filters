@@ -20,14 +20,19 @@
 #include <pthread.h>
 //#endif
 
+
+
 /* Visual Studio < 2013 does not have stdbool.h so here it is a replacement: */
-#if defined __STDC__ && defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
-/* have a C99 compiler */
-typedef _Bool bool;
+#if defined __STDC__ && defined __STDC_VERSION__
+  #if __STDC_VERSION__ >= 199901L && __STDC_VERSION__ <= 201710L 
+  /* have a C99 compiler */
+  typedef _Bool bool;
+  #endif
 #else
 /* do not have a C99 compiler */
 typedef unsigned char bool;
 #endif
+
 
 
 #if !defined(__clang__) && defined(__GNUC__) && defined(__GNUC_MINOR__) && \
