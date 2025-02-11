@@ -18,7 +18,7 @@ AC_SUBST(CC, `"${R_HOME}/bin/R" CMD config CC`)
 AC_SUBST(CFLAGS, `"${R_HOME}/bin/R" CMD config CFLAGS`)
 AC_SUBST(CPICFLAGS, `"${R_HOME}/bin/R" CMD config CPICFLAGS`)
 AC_SUBST(CC99, `"${R_HOME}/bin/R" CMD config CC99`)
-AC_SUBST(CC99FLAGS, `"${R_HOME}/bin/R" CMD config CC99FLAGS`)
+AC_SUBST(C99FLAGS, `"${R_HOME}/bin/R" CMD config C99FLAGS`)
 AC_SUBST(CXX, `"${R_HOME}/bin/R" CMD config CXX`)
 AC_SUBST(CXXFLAGS, `"${R_HOME}/bin/R" CMD config CXXFLAGS`)
 AC_SUBST(CXXPICFLAGS, `"${R_HOME}/bin/R" CMD config CXXPICFLAGS`)
@@ -267,7 +267,7 @@ fi
 
 if test "${CPU_ARCH}" = arm64; then
   VBZ_FLAGS="-D__ARM_NEON__"
-  STREAMBYTE_FLAGS="-std=c99"
+  STREAMBYTE_FLAGS=""
 elif test "${CPU_ARCH}" = x86; then
 
   ## see if -mavx is a supported flag
@@ -285,7 +285,7 @@ elif test "${CPU_ARCH}" = x86; then
   
   if test ${AVX_SUPPORTED} = "true"; then
     VBZ_FLAGS="-mssse3"
-    STREAMBYTE_FLAGS="-std=c99 -mavx"
+    STREAMBYTE_FLAGS="-mavx"
   fi
 else
   echo "Unknown architecture"

@@ -693,7 +693,7 @@ CPPFLAGS
 CXXPICFLAGS
 CXXFLAGS
 CXX
-CC99FLAGS
+C99FLAGS
 CC99
 CPICFLAGS
 CFLAGS
@@ -2422,7 +2422,7 @@ CPICFLAGS=`"${R_HOME}/bin/R" CMD config CPICFLAGS`
 
 CC99=`"${R_HOME}/bin/R" CMD config CC99`
 
-CC99FLAGS=`"${R_HOME}/bin/R" CMD config CC99FLAGS`
+C99FLAGS=`"${R_HOME}/bin/R" CMD config C99FLAGS`
 
 CXX=`"${R_HOME}/bin/R" CMD config CXX`
 
@@ -4252,7 +4252,7 @@ fi
 
 if test "${CPU_ARCH}" = arm64; then
   VBZ_FLAGS="-D__ARM_NEON__"
-  STREAMBYTE_FLAGS="-std=c99"
+  STREAMBYTE_FLAGS=""
 elif test "${CPU_ARCH}" = x86; then
 
   ## see if -mavx is a supported flag
@@ -4399,7 +4399,7 @@ fi
 
   if test ${AVX_SUPPORTED} = "true"; then
     VBZ_FLAGS="-mssse3"
-    STREAMBYTE_FLAGS="-std=c99 -mavx"
+    STREAMBYTE_FLAGS="-mavx"
   fi
 else
   echo "Unknown architecture"
