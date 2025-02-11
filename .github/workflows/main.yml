@@ -46,11 +46,6 @@ jobs:
       - name: Remove system dependencies
         if: ${{ runner.os == 'linux' && matrix.config.sys-libs == 'false' }}
         run: sudo apt-get update && sudo apt-get remove -y libblosc-dev libbz2-dev libzstd-dev liblzf-dev
-        
-      - name: Install mac system dependencies
-        if: matrix.config.os == 'macOS-14'
-        run: |
-          sudo R -e 'source("https://mac.R-project.org/bin/install.R")' -e 'install.libs("openssl")'
           
       - name: Setup R and Bioconductor
         uses: grimbough/bioc-actions/setup-bioc@v1
@@ -58,6 +53,12 @@ jobs:
           bioc-version: ${{ matrix.config.bioc-version }}
           bioc-mirror: ${{ matrix.config.bioc-mirror }}
           Ncpus: ${{ matrix.config.Ncpus }}
+          
+      ## This step needs to come after we've installed R as the base runner no longer has R included
+      - name: Install mac system dependencies
+        if: matrix.config.os == 'macOS-14'
+        run: |
+          sudo R -e 'source("https://mac.R-project.org/bin/install.R")' -e 'install.libs("openssl")'
           
       - uses: r-lib/actions/setup-pandoc@v2
           
@@ -82,6 +83,7 @@ jobs:
       - name: Test INSTALL with C23
         run: |
           R CMD INSTALL --use-C23 ${{ steps.build-install-check.outputs.source-tarball }}
+        shell: bash
 
       - name: Test coverage
         if: runner.os == 'Windows'
