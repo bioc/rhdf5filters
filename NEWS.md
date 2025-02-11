@@ -1,3 +1,8 @@
+# rhdf5filters 1.20.0
+
+* Small changes to compilation of internal blosc and vbz libraries to cope with
+the C23 compiler becoming the default in R-4.5.0
+
 # rhdf5filters 1.16.0
 
 ## CHANGES
