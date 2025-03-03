@@ -686,6 +686,8 @@ OBJEXT
 EXEEXT
 ac_ct_CC
 AR
+CC99
+C99FLAGS
 LDFLAGS
 RANLIB
 MAKE
@@ -693,8 +695,6 @@ CPPFLAGS
 CXXPICFLAGS
 CXXFLAGS
 CXX
-CC99FLAGS
-CC99
 CPICFLAGS
 CFLAGS
 CC
@@ -2420,10 +2420,6 @@ CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 
 CPICFLAGS=`"${R_HOME}/bin/R" CMD config CPICFLAGS`
 
-CC99=`"${R_HOME}/bin/R" CMD config CC99`
-
-CC99FLAGS=`"${R_HOME}/bin/R" CMD config CC99FLAGS`
-
 CXX=`"${R_HOME}/bin/R" CMD config CXX`
 
 CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
@@ -2437,6 +2433,15 @@ MAKE=`"${R_HOME}/bin/R" CMD config MAKE`
 RANLIB=`"${R_HOME}/bin/R" CMD config RANLIB`
 
 LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
+
+C99FLAGS=`"${R_HOME}/bin/R" CMD config C99FLAGS`
+
+
+CC99=`"${R_HOME}/bin/R" CMD config CC99`
+if test -z "$CC99"; then
+  CC99=`"${R_HOME}/bin/R" CMD config CC`
+fi
+
 
 
 ## seems unreliable as to whether this information is available
@@ -4252,7 +4257,7 @@ fi
 
 if test "${CPU_ARCH}" = arm64; then
   VBZ_FLAGS="-D__ARM_NEON__"
-  STREAMBYTE_FLAGS="-std=c99"
+  STREAMBYTE_FLAGS=""
 elif test "${CPU_ARCH}" = x86; then
 
   ## see if -mavx is a supported flag
@@ -4399,7 +4404,7 @@ fi
 
   if test ${AVX_SUPPORTED} = "true"; then
     VBZ_FLAGS="-mssse3"
-    STREAMBYTE_FLAGS="-std=c99 -mavx"
+    STREAMBYTE_FLAGS="-mavx"
   fi
 else
   echo "Unknown architecture"
