@@ -24,6 +24,6 @@ SystemRequirements: GNU make
 URL: https://github.com/grimbough/rhdf5filters
 BugReports: https://github.com/grimbough/rhdf5filters
 LinkingTo: Rhdf5lib
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 biocViews: Infrastructure, DataImport
