@@ -1,3 +1,10 @@
+# rhdf5filter 1.25.1
+
+## BUG FIXES
+
+* This package now compiles on Windows ARM. Thanks to Jeroen Ooms for
+  reporting the issue and providing a patch.
+
 # rhdf5filters 1.24.0
 
 ## BUG FIXES
